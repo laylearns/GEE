@@ -1,0 +1,29 @@
+//geometry:  ee.Geometry()
+function splitRectangle(geometry){
+  var currentCoor = geometry.coordinates().get(0);
+  var XList = ee.List(currentCoor).map(function(XY){return ee.List(XY).getNumber(0)});
+  var YList = ee.List(currentCoor).map(function(XY){return ee.List(XY).getNumber(1)});
+  // print(currentCoor);
+  // print(XList,YList);
+  
+  var maxX = ee.Number(XList.reduce(ee.Reducer.max())),
+      minX = ee.Number(XList.reduce(ee.Reducer.min())),
+      maxY = ee.Number(YList.reduce(ee.Reducer.max())),
+      minY = ee.Number(YList.reduce(ee.Reducer.min()));
+  // print(maxX,minX,maxY,minY);
+  
+  var X1 = minX, X2 = minX.add(maxX).divide(2), X3 = maxX,
+      Y1 = minY, Y2 = minY.add(maxY).divide(2), Y3 = maxY;
+  
+  var splittedGrid = ee.List([ee.Geometry.MultiPolygon([[X1,Y2],[X2,Y2],[X2,Y3],[X1,Y3]]),
+                           ee.Geometry.MultiPolygon([[X2,Y2],[X3,Y2],[X3,Y3],[X2,Y3]]),
+                           ee.Geometry.MultiPolygon([[X1,Y1],[X2,Y1],[X2,Y2],[X1,Y2]]),
+                           ee.Geometry.MultiPolygon([[X2,Y1],[X3,Y1],[X3,Y2],[X2,Y2]])]);
+  
+  return splittedGrid;
+  
+  // Map.addLayer(ee.Geometry(Grid_50km.get(0)),{},'geometry 1');
+  // Map.addLayer(ee.Geometry(Grid_50km.get(1)),{},'geometry 2');
+  // Map.addLayer(ee.Geometry(Grid_50km.get(2)),{},'geometry 3');
+  // Map.addLayer(ee.Geometry(Grid_50km.get(3)),{},'geometry 4');
+}
