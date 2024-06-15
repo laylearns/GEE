@@ -1,0 +1,1291 @@
+ROI:研究区域
+//load boundary
+var geometry=ee.FeatureCollection('users/592961440/luzhai');
+var Anshu=ee.FeatureCollection('users/592961440/luzhaianshu');
+var Guanmu=ee.FeatureCollection('users/592961440/luzhaiguanmu');
+var Jushu=ee.FeatureCollection('users/592961440/luzhaijushu');
+var Kuohun=ee.FeatureCollection('users/592961440/luzhaikuohun');
+var Shanmu=ee.FeatureCollection('users/592961440/luzhaishamu');
+var Songshu=ee.FeatureCollection('users/592961440/luzhaisongshu');
+var Zhulin=ee.FeatureCollection('users/592961440/luzhaizhulin');
+var Gengdi=ee.FeatureCollection('users/592961440/luzhaigengdi');
+var Jiansheyongdi=ee.FeatureCollection('users/592961440/luzhaijiansheyongdi');
+var Shuiti=ee.FeatureCollection('users/592961440/luzhaishuiti');
+//var Chashu=ee.FeatureCollection('users/592961440/Chashu');
+var Caodi=ee.FeatureCollection('users/592961440/luzhaicaodi');
+
+
+var classNames =Anshu.merge(Guanmu).merge(Shanmu).merge(Zhulin).merge(Gengdi).merge(Jiansheyongdi).merge(Shuiti).merge(Songshu).merge(Kuohun).merge(Jushu).merge(Caodi);
+
+
+
+
+//resample 30 m
+// var number=150;
+
+
+ var scale= 30;
+
+function resample(image){
+  var reimage=image.resample('bicubic').reproject('EPSG:4326',null,scale);
+  return reimage
+  .copyProperties(image, ["system:time_start"]);
+}
+
+//2021.11.01---2021.11.30
+//ri ka ze shi
+//var ROI = ee.Geometry.MultiPolygon(
+//        [[[[88.98348563808119, 29.506665872307746],
+//           [88.98348563808119, 29.211627971038546],
+//           [89.357707439839, 29.211627971038546],
+//           [89.357707439839, 29.506665872307746]]]], null, false);
+
+
+//wu zhong shi
+//var ROI = ee.Geometry.MultiPolygon(
+//        [[[[105.66009763052158, 38.19771354332131],
+//           [105.66009763052158, 37.460137131366494],
+//           [106.66260007192783, 37.460137131366494],
+//           [106.66260007192783, 38.19771354332131]]],], null, false);
+
+//shizuishan shi
+//var ROI =       ee.Geometry.Polygon(
+//        [[[106.02459995858723, 40.232708252309365],
+//          [106.02459995858723, 37.452325766886254],
+//          [107.48578159921223, 37.452325766886254],
+//          [107.48578159921223, 40.232708252309365]]], null, false);
+
+//hainanzangzuzizhizhou
+//var ROI =     ee.Geometry.Polygon(
+//        [[[100.57355022679133, 36.38310652032075],
+//          [100.37579632054133, 35.68793281750907],
+//          [101.00201702366633, 35.67900915233243],
+//          [101.41675091038508, 35.89957627266179],
+//          [101.44421673069758, 36.1550209793782]]]);
+ 
+//sajiaxian 
+//var ROI =    ee.Geometry.Polygon(
+//        [[[88.00198060577999, 29.321403861128573],
+//          [88.00198060577999, 28.334882266910633],
+//          [89.17202455109249, 28.334882266910633],
+//          [89.17202455109249, 29.321403861128573]]], null, false);          
+          
+          
+//2021.12.01---2021.12.30
+
+//li jiang
+//var ROI = ee.Geometry.Polygon(
+//        [[[100.24312452604367, 26.733883165817712],
+//          [100.24312452604367, 26.29026052204495],
+//          [100.80068067838742, 26.29026052204495],
+//          [100.80068067838742, 26.733883165817712]]], null, false);
+
+//li jiang02
+//var ROI =     ee.Geometry.Polygon(
+//        [[[100.2472856778667, 26.450944319738745],
+//          [100.2472856778667, 26.081496688841803],
+//          [100.74991018958545, 26.081496688841803],
+//          [100.74991018958545, 26.450944319738745]]], null, false);
+
+
+
+//mao ming shi
+//var ROI =  ee.Geometry.Polygon(
+//        [[[110.86165505536871, 22.219092765208647],
+//          [110.86165505536871, 21.96905721972897],
+//          [111.13699990400153, 21.96905721972897],
+//          [111.13699990400153, 22.219092765208647]]], null, false);
+
+//an qing shi
+//var ROI =  ee.Geometry.Polygon(
+//        [[[115.70108041582094, 31.593247568073103],
+//          [115.70108041582094, 30.725990023075376],
+//          [116.84915170488344, 30.725990023075376],
+//          [116.84915170488344, 31.593247568073103]]], null, false);
+
+//cheng de shi
+//var ROI = ee.Geometry.Polygon(
+//        [[[117.25986614655551, 41.31133085448522],
+//          [117.25986614655551, 40.78001262804569],
+//          [117.99595013093051, 40.78001262804569],
+//          [117.99595013093051, 41.31133085448522]]], null, false);
+
+
+//la sa shi
+//var ROI = ee.Geometry.Polygon(
+//       [[[90.9604314924027, 29.436142540925474],
+//          [90.9604314924027, 29.085109962488744],
+//          [91.3834051252152, 29.085109962488744],
+//          [91.3834051252152, 29.436142540925474]]], null, false);
+
+//panjin
+
+//var ROI =  ee.Geometry.Polygon(
+//          [[[120.59224273377029, 41.32282473096947],
+//          [120.59224273377029, 40.93181162064506],
+//          [121.14430572205154, 40.93181162064506],
+//          [121.14430572205154, 41.32282473096947]]], null, false);
+
+//beijing
+//var ROI =      ee.Geometry.Polygon(
+//        [[[116.235335654461, 40.651689523956186],
+//          [116.235335654461, 39.61860522409474],
+//          [117.89427120133598, 39.61860522409474],
+//          [117.89427120133598, 40.651689523956186]]], null, false);
+
+
+
+//2022.01.01-2022.01.31
+//panzhihua jinshajiang
+//var ROI =    ee.Geometry.Polygon(
+//        [[[102.92098715409001, 26.795535521988835],
+//          [102.92098715409001, 26.472685863223827],
+//          [103.07479574784001, 26.472685863223827],
+//          [103.07479574784001, 26.795535521988835]]], null, false);
+
+
+//panzhihua jinshajiang02
+//var ROI =      ee.Geometry.Polygon(
+//        [[[102.91729231757051, 26.636853194979118],
+//          [102.91729231757051, 26.330788342623244],
+//          [103.11779280585176, 26.330788342623244],
+//          [103.11779280585176, 26.636853194979118]]], null, false);
+          
+//panzhihua03
+//var ROI =     ee.Geometry.Polygon(
+//        [[[101.77003750660167, 26.135777613953227],
+//          [101.77003750660167, 25.918590281432387],
+//          [102.13121304371104, 25.918590281432387],
+//          [102.13121304371104, 26.135777613953227]]], null, false);
+
+
+//liangshanyizu zizhizhou
+// var ROI =        ee.Geometry.Polygon(
+//         [[[102.15923035314704, 27.955369477476346],
+//           [102.15923035314704, 27.69668216113534],
+//           [102.42976868322516, 27.69668216113534],
+//           [102.42976868322516, 27.955369477476346]]], null, false);
+
+
+
+
+//2022.02.01-2022.02.28
+
+//xuan cheng shi
+//var ROI =  ee.Geometry.Polygon(
+//        [[[119.37199733302214, 31.161460360524515],
+//          [119.37199733302214, 31.041814239428597],
+//          [119.52340266749479, 31.041814239428597],
+//          [119.52340266749479, 31.161460360524515]]], null, false);
+
+//lai xi shi
+//var ROI = ee.Geometry.Polygon(
+//        [[[120.77109871479408, 36.826904868122064],
+//          [120.77109871479408, 36.67202897314578],
+//          [120.99837837788002, 36.67202897314578],
+//          [120.99837837788002, 36.826904868122064]]], null, false);
+
+
+//e er duo si
+//var ROI = ee.Geometry.Polygon(
+//        [[[110.34945862282262, 40.06223165218339],
+//          [110.34945862282262, 39.88121258502746],
+//          [110.60214416969762, 39.88121258502746],
+//          [110.60214416969762, 40.06223165218339]]], null, false);
+
+
+//ping chang xian
+//var ROI = ee.Geometry.Polygon(
+//        [[[107.23843235397236, 31.748913579568065],
+//          [107.23843235397236, 31.646675188277488],
+//          [107.37541813278095, 31.646675188277488],
+//          [107.37541813278095, 31.748913579568065]]], null, false);
+
+//2022.03.01-2022.03.30
+
+//yue yang shi
+//var ROI = ee.Geometry.Polygon(
+//        [[[113.25337888128412, 29.55733912444735],
+//          [113.25337888128412, 29.349868207108603],
+//          [113.52597714788568, 29.349868207108603],
+//          [113.52597714788568, 29.55733912444735]]], null, false);
+
+//lin cang shi
+//var ROI = ee.Geometry.Polygon(
+//        [[[99.24636769839239, 23.653254932495248],
+//          [99.24636769839239, 23.24190178641944],
+//          [99.73663259097052, 23.24190178641944],
+//          [99.73663259097052, 23.653254932495248]]], null, false);
+
+//pu bei xian          
+//var ROI = ee.Geometry.Polygon(
+//        [[[109.34772737210456, 22.235036513928407],
+//          [109.34772737210456, 22.0194076268298],
+//          [109.60418946927253, 22.0194076268298],
+//          [109.60418946927253, 22.235036513928407]]], null, false);
+
+
+//mao ming
+//var ROI = ee.Geometry.Polygon(
+//        [[[110.78192868077808, 21.744939186037534],
+//          [110.78192868077808, 21.634559998254122],
+//          [110.91273465001636, 21.634559998254122],
+//          [110.91273465001636, 21.744939186037534]]], null, false);
+
+//jiahexian
+//var ROI = ee.Geometry.Polygon(
+//        [[[111.99187433443343, 25.75005288774541],
+//          [111.99187433443343, 25.41685677541191],
+//          [112.38875543794906, 25.41685677541191],
+//          [112.38875543794906, 25.75005288774541]]], null, false);          
+
+
+//kunming
+//var ROI =     ee.Geometry.Polygon(
+//          [[[101.99454120014538, 25.406864898433586],
+//          [101.99454120014538, 23.984551292893276],
+//          [103.63150409077038, 23.984551292893276],
+//          [103.63150409077038, 25.406864898433586]]], null, false);
+
+//wuchuan
+//var ROI =     ee.Geometry.Polygon(
+//        [[[110.72869546383849, 21.526896783740924],
+//          [110.72869546383849, 21.403885669359457],
+//          [110.89349038571349, 21.403885669359457],
+//          [110.89349038571349, 21.526896783740924]]], null, false);
+
+
+
+//panzhihua
+//var ROI =        ee.Geometry.Polygon(
+//        [[[102.37362394881406, 27.02920254579173],
+//          [102.37362394881406, 26.233729877140934],
+//          [103.46676359725156, 26.233729877140934],
+//          [103.46676359725156, 27.02920254579173]]], null, false);
+
+//2022.04.01-2022.04.30
+
+//haerbin
+//var ROI = ee.Geometry.Polygon(
+//        [[[127.2617612033672, 46.24232692440604],
+//          [127.2617612033672, 45.83144362950442],
+//          [127.58311130102345, 45.83144362950442],
+//          [127.58311130102345, 46.24232692440604]]], null, false);
+
+
+//haerbin
+//var ROI = ee.Geometry.Polygon(
+//        [[[126.32636664593754, 45.787423828456696],
+//          [126.32636664593754, 45.6704709400462],
+//          [126.47536872113285, 45.6704709400462],
+//          [126.47536872113285, 45.787423828456696]]], null, false);
+
+//changde
+//var ROI =  ee.Geometry.Polygon(
+//        [[[111.26683940516013, 29.87046546068414],
+//          [111.26683940516013, 29.330752555242945],
+//          [111.92739238367575, 29.330752555242945],
+//          [111.92739238367575, 29.87046546068414]]], null, false);
+
+//jingmen 
+//var ROI =  ee.Geometry.Polygon(
+//        [[[111.66929145289832, 31.321991354135445],
+//          [111.66929145289832, 30.769003333592753],
+//          [112.3655499978202, 30.769003333592753],
+//          [112.3655499978202, 31.321991354135445]]], null, false); 
+ 
+//guangzhouqingyuan 
+//var ROI = ee.Geometry.Polygon(
+//        [[[111.99040774526853, 24.09286116228876],
+//          [111.99040774526853, 23.721872099118055],
+//          [112.41063479604978, 23.721872099118055],
+//          [112.41063479604978, 24.09286116228876]]], null, false);
+          
+//chenzhou          
+//var ROI = ee.Geometry.Polygon(
+//        [[[112.99425755466187, 26.07248209184325],
+//          [112.99425755466187, 25.60775515736549],
+//          [113.55730687106812, 25.60775515736549],
+//          [113.55730687106812, 26.07248209184325]]], null, false);          
+ 
+//xinyushi
+//var ROI = ee.Geometry.Polygon(
+//        [[[114.53853066843975, 28.39502327374401],
+//          [114.53853066843975, 27.606886387426613],
+//          [115.6014579145335, 27.606886387426613],
+//          [115.6014579145335, 28.39502327374401]]], null, false);
+
+
+//chgangzhishi
+//var ROI = ee.Geometry.Polygon(
+//        [[[111.85783820270287, 36.64361696060045],
+//          [111.85783820270287, 35.57187623234834],
+//          [113.5195203316091, 35.57187623234834],
+//          [113.5195203316091, 36.64361696060045]]], null, false);
+
+//chi feng shi
+//var ROI = ee.Geometry.Polygon(
+//        [[[117.98978283096463, 42.776646767666826],
+//          [117.98978283096463, 42.054791194710425],
+//          [119.06232311416775, 42.054791194710425],
+//          [119.06232311416775, 42.776646767666826]]], null, false);
+
+//lan zhou shi
+//var ROI =  ee.Geometry.Polygon(
+//        [[[103.61186677363126, 36.360626737936734],
+ //         [103.61186677363126, 35.66302232850983],
+//          [104.45506745722501, 35.66302232850983],
+//          [104.45506745722501, 36.360626737936734]]], null, false);
+
+//pu er shi
+//var ROI =  ee.Geometry.Polygon(
+//        [[[100.23785797815519, 23.135874800898204],
+//          [100.28042999963957, 22.745907148881443],
+//          [100.01401154260832, 22.57736060600892],
+//          [100.28866974573332, 22.425111371254772],
+//          [100.44797150354582, 22.583700683779607],
+//          [100.45534455718145, 22.861108918252402],
+//          [100.53774201811895, 23.116482273206998]]]);
+
+
+//jingmenshi
+// var ROI =   ee.Geometry.Polygon(
+//        [[[111.82880062898857, 31.469098345102623],
+//         [111.82880062898857, 30.35452539101238],
+//          [113.21582455476982, 30.35452539101238],
+//          [113.21582455476982, 31.469098345102623]]], null, false);
+
+//2022.05.01-2022.05.30
+
+//ha er bin
+
+//var ROI =     ee.Geometry.Polygon(
+//        [[[125.73156720455431, 46.11246917329941],
+//          [125.73156720455431, 45.43238376612582],
+//          [127.27239972408556, 45.43238376612582],
+//          [127.27239972408556, 46.11246917329941]]], null, false);
+
+//2022.06.01-2022.06.30
+//sui bin xian
+//var ROI =      ee.Geometry.Polygon(
+//        [[[131.90553607717862, 47.677179300982296],
+//          [131.90553607717862, 47.26781611570731],
+//          [132.69243182913175, 47.26781611570731],
+//          [132.69243182913175, 47.677179300982296]]], null, false);
+
+
+//fuyuan xian02
+//var ROI =    ee.Geometry.Polygon(
+//        [[[133.91947875434954, 48.465265179582275],
+//          [133.91947875434954, 48.05017104342364],
+//          [134.80937133247454, 48.05017104342364],
+//          [134.80937133247454, 48.465265179582275]]], null, false);
+
+
+//fuyuan xian
+//var ROI =  ee.Geometry.Polygon(
+//        [[[134.0995892767015, 48.03554070082425],
+//          [134.53766911068587, 48.05849253227451],
+//          [134.63105289974837, 48.17767720726829],
+//          [134.74366276302962, 48.34224581834607],
+//          [134.71345036068587, 48.3842172609269],
+//          [134.52668278256087, 48.404278334525536],
+//          [134.05701725521712, 48.31576778522331]]]);
+
+//shucheng 
+//var ROI =     ee.Geometry.Polygon(
+//        [[[116.23641201705317, 31.499350201623958],
+//          [116.23641201705317, 31.020393253076666],
+//          [116.84340664595942, 31.020393253076666],
+//          [116.84340664595942, 31.499350201623958]]], null, false);
+
+
+        
+         
+//浏览ESRI全球土地利用数据
+
+var ESRI = ee.ImageCollection("projects/sat-io/open-datasets/landcover/ESRI_Global-LULC_10m").map(resample);
+//筛选数据             
+var ESRI_ROI_landcover=ESRI
+              .select('b1')
+              .filterBounds(ROI)
+              .mosaic()
+              .clip(ROI);
+
+//浏览ESA全球土地利用数据
+var ESA = ee.ImageCollection("ESA/WorldCover/v100").map(resample).first();
+//筛选数据
+var ESA_ROI_landcover=ESA
+              .select('Map')
+              .clip(ROI);
+
+
+//print('ESRI_ROI_landcover',ESRI_ROI_landcover);
+//print('ESA_ROI_landcover',ESA_ROI_landcover);
+
+//--------------------------------------------
+//01.Extract Trees
+var trees=ee.Image(ESRI_ROI_landcover.eq(2).and(ESA_ROI_landcover.eq(10)));
+var Trees=trees.mask(trees);
+
+//Extract TOthers except Trees
+var Tothers=trees.eq(0);
+var TOthers=Tothers.updateMask(Tothers);
+
+//buffer around Others with scale m
+var Tbuffer = ee.Image(1)
+    .cumulativeCost({
+      source: TOthers, 
+      maxDistance: scale,
+    }).lt(scale);
+
+//Extract the area where Trees and B intersect, take Trees but not b
+var Treesdifference = Trees.updateMask(Tbuffer.mask().not()); 
+
+var NewTrees=Treesdifference.remap([1],[1]);
+
+
+//--------------------------------------------------------------------
+//02.Extract Shrubland
+var shrubland=ee.Image(ESRI_ROI_landcover.eq(6).and(ESA_ROI_landcover.eq(20)));
+var Shrubland=shrubland.mask(shrubland);
+
+
+//Extract SOthers except Shrubland
+var Sothers=shrubland.eq(0);
+var SOthers=Sothers.updateMask(Sothers);
+
+//Map.setCenter(109, 25, 5);
+//Map.addLayer(Shrubland, {}, 'Shrubland');
+
+//buffer around Others with 20 m
+var Sbuffer = ee.Image(1)
+    .cumulativeCost({
+      source: SOthers, 
+      maxDistance: scale,
+    }).lt(scale);
+
+//Extract the area where Shrubland and B intersect, take Shrubland but not b
+var Shrublanddifference = Shrubland.updateMask(Sbuffer.mask().not()); 
+
+var NewShrubland=Shrublanddifference.remap([1],[2]);
+
+
+//---------------------------------------------------------------------------
+//03.Extract Grassland
+var grassland=ee.Image(ESRI_ROI_landcover.eq(3).and(ESA_ROI_landcover.eq(30)));
+var Grassland=grassland.mask(grassland);
+
+
+//Extract SOthers except Shrubland
+var Gothers=grassland.eq(0);
+var GOthers=Gothers.updateMask(Gothers);
+
+//Map.setCenter(109, 25, 5);
+//Map.addLayer(Grassland, {}, 'Grassland');
+
+//buffer around Others with 20 m
+var Gbuffer = ee.Image(1)
+    .cumulativeCost({
+      source: GOthers, 
+      maxDistance: scale,
+    }).lt(scale);
+
+//Extract the area where Grassland and B intersect, take Grassland but not b
+var Grasslanddifference = Grassland.updateMask(Gbuffer.mask().not()); 
+
+var NewGrassland=Grasslanddifference.remap([1],[3]);
+
+
+
+//-------------------------------------------------------------------------------
+//04.Extract Cropland
+var cropland=ee.Image(ESRI_ROI_landcover.eq(5).and(ESA_ROI_landcover.eq(40)));
+var Cropland=cropland.mask(cropland);
+
+
+//Extract COthers except Cropland
+var Cothers=cropland.eq(0);
+var COthers=Cothers.updateMask(Cothers);
+
+//Map.setCenter(109, 25, 5);
+//Map.addLayer(Cropland, {}, 'Cropland');
+
+//buffer around Others with 20 m
+var Cbuffer = ee.Image(1)
+    .cumulativeCost({
+      source: COthers, 
+      maxDistance: scale,
+    }).lt(scale);
+
+//Extract the area where Cropland and B intersect, take Cropland but not b
+var Croplanddifference = Cropland.updateMask(Cbuffer.mask().not()); 
+
+var NewCropland=Croplanddifference.remap([1],[4]);
+
+
+//---------------------------------------------------------------------
+//05.Extract Built
+var built=ee.Image(ESRI_ROI_landcover.eq(7).and(ESA_ROI_landcover.eq(50)));
+var Built=built.mask(built);
+
+
+//Extract BOthers except Cropland
+var Bothers=built.eq(0);
+var BOthers=Bothers.updateMask(Bothers);
+
+//Map.setCenter(109, 25, 5);
+//Map.addLayer(Built, {}, 'Built');
+
+//buffer around Others with 20 m
+var Bbuffer = ee.Image(1)
+    .cumulativeCost({
+      source: BOthers, 
+      maxDistance: scale,
+    }).lt(scale);
+
+//Extract the area where Built and B intersect, take Built but not b
+var Builtdifference = Built.updateMask(Bbuffer.mask().not()); 
+
+var NewBuilt=Builtdifference.remap([1],[5]);
+
+
+//------------------------------------------------------------------------------------
+//06.Extract Barren
+var barren=ee.Image(ESRI_ROI_landcover.eq(8).and(ESA_ROI_landcover.eq(60)));
+var Barren=barren.mask(barren);
+
+
+//Extract BOthers except Cropland
+var Baothers=barren.eq(0);
+var BaOthers=Baothers.updateMask(Baothers);
+
+//Map.setCenter(109, 25, 5);
+//Map.addLayer(Barren, {}, 'Barren');
+
+//buffer around Others with 20 m
+var Babuffer = ee.Image(1)
+    .cumulativeCost({
+      source: BaOthers, 
+      maxDistance: scale,
+    }).lt(scale);
+
+//Extract the area where Barren and B intersect, take Barren but not b
+var Barrendifference = Barren.updateMask(Babuffer.mask().not()); 
+
+var NewBarren=Barrendifference.remap([1],[6]);
+
+
+
+//--------------------------------------------------------------------------------
+//07.Extract Water
+var water=ee.Image(ESRI_ROI_landcover.eq(1).and(ESA_ROI_landcover.eq(80)));
+var Water=water.mask(water);
+
+
+//Extract WOthers except Water
+var Wothers=water.eq(0);
+var WOthers=Wothers.updateMask(Wothers);
+
+//Map.setCenter(109, 25, 5);
+//Map.addLayer(Water, {}, 'Water');
+
+//buffer around Others with 20 m
+var Wbuffer = ee.Image(1)
+    .cumulativeCost({
+      source: WOthers, 
+      maxDistance: scale,
+    }).lt(scale);
+
+//Extract the area where Water and B intersect, take Water but not b
+var Waterdifference = Water.updateMask(Wbuffer.mask().not()); 
+
+var NewWater=Waterdifference.remap([1],[7]);
+
+//--------------------------------------------------------------------------------
+//08.Extract Flooded vegetation
+var floodedvegetation=ee.Image(ESRI_ROI_landcover.eq(4).and(ESA_ROI_landcover.eq(90).or(ESA_ROI_landcover.eq(95))));
+var Floodedvegetation=floodedvegetation.mask(floodedvegetation);
+
+
+//Extract FOthers except Water
+var Fothers=floodedvegetation.eq(0);
+var FOthers=Fothers.updateMask(Fothers);
+
+//Map.setCenter(109, 25, 5);
+//Map.addLayer(Water, {}, 'Water');
+
+//buffer around Others with 20 m
+var Fbuffer = ee.Image(1)
+    .cumulativeCost({
+      source: FOthers, 
+      maxDistance: scale,
+    }).lt(scale);
+
+//Extract the area where Water and B intersect, take Water but not b
+var Floodedvegetationdifference = Floodedvegetation.updateMask(Fbuffer.mask().not()); 
+
+var NewFloodedvegetation=Floodedvegetationdifference.remap([1],[8]);
+
+
+//Union set
+var mask = NewTrees.mask().or(NewShrubland.mask()).or(NewGrassland.mask())
+            .or(NewCropland.mask()).or(NewBuilt.mask()).or(NewBarren.mask())
+            .or(NewWater.mask()).or(NewFloodedvegetation.mask()); 
+var baseImg = ee.Image.constant(0) 
+                .updateMask(mask); 
+var newTreesdifference = baseImg.where(NewTrees.mask(), NewTrees); 
+var newShrublanddifference = baseImg.where(NewShrubland.mask(), NewShrubland); 
+var newGrasslanddifference = baseImg.where(NewGrassland.mask(), NewGrassland); 
+var newCroplanddifference = baseImg.where(NewCropland.mask(), NewCropland); 
+var newBuiltdifference = baseImg.where(NewBuilt.mask(), NewBuilt); 
+var newBarrendifference = baseImg.where(NewBarren.mask(), NewBarren); 
+var newWaterdifference = baseImg.where(NewWater.mask(), NewWater);
+var newFloodedvegetationdifference = baseImg.where(NewFloodedvegetation.mask(), NewFloodedvegetation);
+
+
+var newlandcover = newTreesdifference.add(newShrublanddifference).add(newGrasslanddifference)
+                  .add(newCroplanddifference).add(newBuiltdifference).add(newBarrendifference)
+                  .add(newWaterdifference).add(newFloodedvegetationdifference); 
+
+
+
+var Newlandcover=newlandcover.rename('landcover');
+//print('Newlandcover:',Newlandcover);
+
+//显示参数设置
+var imageVisParam_ESRI = {"min":1,"max":10,"palette":["8dffda","14ff31","686dff","ff9b54","ff712d","ff66b4"]};
+
+//Map.setCenter(109, 25, 5);
+Map.addLayer(Newlandcover, imageVisParam_ESRI, 'Newlandcover');
+
+
+
+// stratifiedSample
+// var stratifiedSamplepoints = Newlandcover.stratifiedSample({
+//   numPoints: number, 
+//   classBand: "landcover", 
+//   region: ROI,
+//   scale:scale,
+//   projection:'EPSG:4326',
+//   geometries: true,
+//   seed: 123,
+//   tileScale: 4
+// });
+
+//print("stratifiedSamplepoints:",stratifiedSamplepoints);
+//Map.addLayer(stratifiedSamplepoints, {}, "stratifiedSamplepoints");
+
+
+//Export.table.toDrive({
+//  //geometry需要转为FeatureCollection才可以导出
+//  collection:ee.FeatureCollection(stratifiedSamplepoints),
+//  description: "stratifiedSamplepoints", //Task name
+//  fileNamePrefix: "stratifiedSamplepoints", //SHP name
+//  fileFormat: "SHP", 
+//  folder: "stratifiedSamplepoints" //folder name
+//});
+
+//------------------------------------------------------------------------------
+
+
+//VI     
+    
+function VI(image)
+{
+   var NIR=image.select('B5');
+   var RED=image.select('B4');
+   var GREEN=image.select('B3');
+   var BLUE=image.select('B2'); 
+   var SNIR=image.select('B6');
+   var EVI =image.expression('2.5*((B5-B4)/(B5+6*B4-7.5*B2+1))',{
+     'B5':NIR,
+     'B4':RED,
+     'B2':BLUE
+   });
+  var NDVI =image.expression('((B5-B4)/(B5+B4))',{
+     'B5':NIR,
+     'B4':RED
+   }); 
+    var TCARI =image.expression('3*((B5 - B4) -0.2*(B5-B3))*(B5/B4)',{
+     'B5':NIR,
+     'B3':GREEN,
+     'B4':RED
+   }); 
+   var NDWI =image.expression('((B3-B5)/(B5+B3))',{
+     'B5':NIR,
+     'B3':GREEN
+   });  
+   var MCARI =image.expression('((B5-B4) -0.2*(B5-B3))*(B5/B4)',{
+     'B5':NIR,
+     'B3':GREEN,
+     'B4':RED
+   });  
+  var RDVI =image.expression('(B5-B4) / pow(B5-B4,0.5)',{
+     'B5':NIR,
+     'B4':RED
+   });  
+   var TVI =image.expression('0.5*(120*(B5- B3) / 200*(B4-B3))',{
+     'B5':NIR,
+     'B3':GREEN,
+     'B4':RED
+   });  
+   var SAVI =image.expression('(1 + 0.2) * float(B5 - B4)/ (B5 + B4 + 0.2)',{
+     'B5':NIR,
+     'B4':RED
+   });  
+  var MSI =image.expression('B5/B3',{
+     'B5':NIR,
+     'B3':GREEN
+   }); 
+   var LSWI =image.expression('((B5-B6)/(B5+B6))',{
+     'B5':NIR,
+     'B6':SNIR
+   });  
+   
+  return (EVI.rename('EVI')).addBands(NDVI.rename('NDVI'))
+  .addBands(NDWI.rename('NDWI')).addBands(TCARI.rename('TCARI'))
+  .addBands(MCARI.rename('MCARI')).addBands(RDVI.rename('RDVI')).addBands(TVI.rename('TVI')).addBands(SAVI.rename('SAVI'))
+  .addBands(MSI.rename('MSI')).addBands(LSWI.rename('LSWI'));
+}
+
+
+//Landsat8 SR数据去云 
+
+function maskL8sr(image) {
+  var cloudShadowBitMask = (1 << 3);
+  var cloudsBitMask = (1 << 5);
+  var qa = image.select('QA_PIXEL');
+  var mask = qa.bitwiseAnd(cloudShadowBitMask).eq(0)
+                .and(qa.bitwiseAnd(cloudsBitMask).eq(0));
+  return image.updateMask(mask);
+}
+
+
+
+/////for Landsat-8
+
+var imageCollection8= ee.ImageCollection('LANDSAT/LC08/C02/T1_L2')
+    .filterBounds(ROI)
+    .filterDate("2021-12-1", "2021-12-30") 
+    .map(maskL8sr)
+    .map(resample);
+
+print(imageCollection8,'imageCollection8');
+
+var bandsimage8 = imageCollection8.median()
+                 .clip(ROI)
+                .select('SR_B1','SR_B2','SR_B3','SR_B4','SR_B5','SR_B6','SR_B7')
+                .rename('B1','B2','B3','B4','B5','B6','B7')
+                 .multiply(0.0000275)
+                 .subtract(0.2); 
+
+
+var vi8=VI(bandsimage8);
+var textureimage = bandsimage8
+                   .toInt16()
+                   .glcmTexture(); 
+
+var image8= bandsimage8.addBands(vi8).addBands(textureimage);
+
+//Map.addLayer(bandsimage.select('B2'),{},'bandsimage');
+
+
+
+//----------------------------------------------------------------------------------------
+// k-fold_cross_validation
+var inputtedFeatureCollection = classNames;
+
+var imageToClassify = image8;
+
+var k = 10;
+
+//var classifierOfChoice = ee.Classifier.smileRandomForest(500).setOutputMode('CLASSIFICATION');
+
+var classifierOfChoice = ee.Classifier.smileGradientTreeBoost(100).setOutputMode('CLASSIFICATION');
+
+//var classifierOfChoice = ee.Classifier.amnhMaxent();
+
+
+var propertyToPredictAsString = 'landcover';
+
+var scaleToSample = scale;
+
+
+
+var kFoldCrossValidation = function(inputtedFeatureCollection, imageToClassify, k, classifierOfChoice, propertyToPredictAsString, scaleToSample) {
+	/*
+	Arguments:
+	inputtedFeatureCollection: an ee.FeatureCollection() of sample points object with a property of interest
+	imageToClassify: the image used to classify/regress the point samples
+	k: the number of folds
+	classifierOfChoice: the classifier/regressor of choice
+	propertyToPredictAsString: the name of the property to predict as a string object
+	scaleToSample: the scale at which to sample the image
+	*/
+	
+	// ———————————————————————————————————————————————————————————————
+	// The sections below are the function's code, beginning with
+	// preparation of the inputted feature collection of sample points
+
+
+	var collLength = inputtedFeatureCollection.size();
+	//print('Number of Sample Points',collLength);
+
+	var sampleSeq = ee.List.sequence(1, collLength);
+	//print('Sample Sequence',sampleSeq);
+
+	var inputtedFCWithRand = inputtedFeatureCollection.randomColumn('Rand_Num', 42).sort('Rand_Num').toList(collLength);
+	//print('Total FC with Random Column',inputtedFCWithRand);
+
+	// Prep the feature collection with random fold assignment numbers
+	var preppedListOfFeats = sampleSeq.map(function(numberToSet) {
+		return ee.Feature(inputtedFCWithRand.get(ee.Number(numberToSet).subtract(1))).set('Fold_ID', ee.Number(numberToSet));
+	});
+	//print('Prepped FC', preppedListOfFeats);
+
+
+
+
+	// ———————————————————————————————————————————————————————————————
+	// This section divides the feature collection into the k folds
+
+
+	var averageFoldSize = collLength.divide(k).floor();
+	//print('Average Fold Size',averageFoldSize);
+
+	var remainingSampleSize = collLength.mod(k);
+	//print('Remaining Sample Size', remainingSampleSize);
+
+	var foldSequenceWithoutRemainder = ee.List.sequence(0, k - 1).map(function(fold) {
+		var foldStart = ee.Number(fold).multiply(averageFoldSize).add(1);
+		var foldEnd = ee.Number(foldStart).add(averageFoldSize.subtract(1));
+		var foldNumbers = ee.List.sequence(foldStart, foldEnd);
+		return ee.List(foldNumbers);
+	});
+	//print('Fold Sequence Without Remaining Samples',foldSequenceWithoutRemainder);
+
+	var remainingFoldSequence = ee.List.sequence(ee.Number(ee.List(foldSequenceWithoutRemainder.get(foldSequenceWithoutRemainder.length().subtract(1))).get(averageFoldSize.subtract(1))),
+		ee.Number(ee.List(foldSequenceWithoutRemainder.get(foldSequenceWithoutRemainder.length().subtract(1))).get(averageFoldSize.subtract(1))).add(ee.Number(remainingSampleSize).subtract(1)));
+	//print('Remaining Fold Sequence',remainingFoldSequence);
+
+	// This is a list of lists describing which features will go into each fold
+	var listsWithRemaindersAdded = foldSequenceWithoutRemainder.zip(remainingFoldSequence).map(function(list) {
+		return ee.List(list).flatten();
+	});
+	//print('Lists with Remainders Added',listsWithRemaindersAdded);
+
+	var finalFoldLists = listsWithRemaindersAdded.cat(foldSequenceWithoutRemainder.slice(listsWithRemaindersAdded.length()));
+	//print('Final Fold Lists Formatted',finalFoldLists);
+
+	var mainFoldList = ee.List.sequence(0, k - 1);
+	//print('Main Fold List',mainFoldList);
+
+
+	// Compute the collected training data
+	var trainingData = mainFoldList.map(function(foldNumber) {
+		var listWithoutFold = finalFoldLists.get(foldNumber);
+		var foldListOfLists = ee.FeatureCollection(preppedListOfFeats).filter(ee.Filter.inList('Fold_ID', listWithoutFold).not()).toList(collLength);
+		return foldListOfLists;
+	});
+	//print('Training Data Folds', trainingData);
+
+
+	// Compute the validation folds
+	var validationData = mainFoldList.map(function(foldNumber) {
+		var listWithoutFold = finalFoldLists.get(foldNumber);
+		var foldListOfLists = ee.FeatureCollection(preppedListOfFeats).filter(ee.Filter.inList('Fold_ID', listWithoutFold)).toList(collLength);
+		return foldListOfLists;
+	});
+	//print('Validation Data Folds', validationData);
+
+
+
+
+	// ———————————————————————————————————————————————————————————————
+	// Train the data and retrieve the values at the sample points
+
+
+	// Classify the images based on the training folds
+	var classifiedImages = mainFoldList.map(function(foldNumber) {
+		var trainingFold = imageToClassify.sampleRegions({
+	collection:ee.FeatureCollection(ee.List(trainingData.get(foldNumber))),
+  scale: scaleToSample,
+  tileScale:16
+		});
+		var trainedClassifier = classifierOfChoice.train(trainingFold, propertyToPredictAsString);
+		var classifiedImages = imageToClassify.classify(trainedClassifier).rename(ee.String(propertyToPredictAsString).cat('_Classification'));
+		return classifiedImages;
+	});
+   //print('Classified Images', classifiedImages);
+
+  //important
+	var important = mainFoldList.map(function(foldNumber) {
+		var trainingFold = imageToClassify.sampleRegions({
+	collection:ee.FeatureCollection(ee.List(trainingData.get(foldNumber))),
+  scale: scaleToSample,
+  tileScale:16
+		});
+		var trainedClassifier = classifierOfChoice.train(trainingFold, propertyToPredictAsString);
+		var dict= trainedClassifier.explain();
+		var important = ee.Feature(null, ee.Dictionary(dict).get('importance'));
+		return important;
+	});
+  // print('important', important);
+
+	// Retrieve the validation data from the validation folds
+	var validationResults = mainFoldList.map(function(foldNumber) {
+		var imageToSample = ee.Image(classifiedImages.get(foldNumber));
+		var validationFoldSamples = ee.List(validationData.get(foldNumber)).map(function(feat) {
+			return ee.Feature(feat).set('Fold_Number', foldNumber);
+		});
+		var validationResults = imageToSample.sampleRegions({
+			collection: ee.FeatureCollection(validationFoldSamples).select([propertyToPredictAsString, 'Fold_Number', 'Fold_ID', 'Sample_Num']),
+			scale: scaleToSample,
+			tileScale:16
+		}).toList(collLength);
+		return validationResults;
+	});
+	//print('Validation Results',validationResults);
+
+	var validationResultsFlattened = ee.FeatureCollection(validationResults.flatten());
+//print('Validation Results Flattened and Formatted',validationResultsFlattened);
+
+	var imageclassification = ee.ImageCollection.fromImages(classifiedImages);
+
+
+  var importance = important;
+  //print('importance',importance);
+ 
+	return ([validationResultsFlattened,imageclassification,importance]);
+	
+
+};
+
+
+var kFoldCVResults = kFoldCrossValidation(inputtedFeatureCollection, imageToClassify, k, classifierOfChoice, propertyToPredictAsString, scaleToSample);
+//print('k-Fold Cross Validation Results', kFoldCVResults);
+
+
+var confusionMatrix = kFoldCVResults[0].errorMatrix('landcover', 'landcover_Classification');
+print('Confusion Matrix', confusionMatrix);
+
+var accuracy = confusionMatrix.accuracy();
+var userAccuracy = confusionMatrix.consumersAccuracy();
+var producersAccuracy = confusionMatrix.producersAccuracy();
+var kappa = confusionMatrix.kappa();
+
+print('accuracy',accuracy);
+print('userAccuracy',userAccuracy);
+print('producersAccuracy',producersAccuracy);
+print('kappa',kappa);
+
+
+  
+function mode() {
+  //ee.Reducer.mode
+  //list
+  var a = ee.List([2,1,3,3,5]);
+  print("mode", a.reduce(ee.Reducer.mode()));
+}
+ 
+ var imageclassified = kFoldCVResults[1].reduce(ee.Reducer.mode());
+ print("imageclassified", imageclassified); 
+
+
+Export.image.toDrive({
+  image: imageclassified,
+  description: "L8__result_2022_3",
+  scale: scale,
+  region:ROI,
+  fileFormat: 'GeoTIFF',
+  maxPixels: 1e13
+}); 
+
+
+
+
+
+//Landsat9 SR数据去云 
+
+function maskL9sr(image) {
+  var cloudShadowBitMask = (1 << 3);
+  var cloudsBitMask = (1 << 5);
+  var qa = image.select('QA_PIXEL');
+  var mask = qa.bitwiseAnd(cloudShadowBitMask).eq(0)
+                .and(qa.bitwiseAnd(cloudsBitMask).eq(0));
+  return image.updateMask(mask);
+}
+
+
+/////for Landsat-9
+var imageCollection9= ee.ImageCollection('LANDSAT/LC09/C02/T1_L2')
+    .filterBounds(ROI)
+    .filterDate("2021-1-1", "2024-5-31")
+    .map(maskL9sr)
+    .map(resample);
+
+print(imageCollection9,'imageCollection9');
+
+
+var bandsimage9 = imageCollection9.median()
+                 .clip(ROI)
+                 .select('SR_B1','SR_B2','SR_B3','SR_B4','SR_B5','SR_B6','SR_B7')
+                 .rename('B1','B2','B3','B4','B5','B6','B7')
+                 .multiply(0.0000275)
+                 .subtract(0.2);
+
+
+ 
+
+var vi9=VI(bandsimage9);
+
+var image9= bandsimage9.addBands(vi9);//.addBands(textureimage);
+
+
+
+//----------------------------------------------------------------------------------------
+// k-fold_cross_validation
+var inputtedFeatureCollection = classNames;
+
+var imageToClassify = image9;
+
+var k = 10;
+
+//var classifierOfChoice = ee.Classifier.smileRandomForest(500).setOutputMode('CLASSIFICATION');
+
+var classifierOfChoice = ee.Classifier.smileGradientTreeBoost(100).setOutputMode('CLASSIFICATION');
+
+//var classifierOfChoice = ee.Classifier.amnhMaxent();
+
+
+var propertyToPredictAsString = 'landcover';
+
+var scaleToSample = scale;
+
+
+
+var kFoldCrossValidation = function(inputtedFeatureCollection, imageToClassify, k, classifierOfChoice, propertyToPredictAsString, scaleToSample) {
+	/*
+	Arguments:
+	inputtedFeatureCollection: an ee.FeatureCollection() of sample points object with a property of interest
+	imageToClassify: the image used to classify/regress the point samples
+	k: the number of folds
+	classifierOfChoice: the classifier/regressor of choice
+	propertyToPredictAsString: the name of the property to predict as a string object
+	scaleToSample: the scale at which to sample the image
+	*/
+	
+	// ———————————————————————————————————————————————————————————————
+	// The sections below are the function's code, beginning with
+	// preparation of the inputted feature collection of sample points
+
+
+	var collLength = inputtedFeatureCollection.size();
+	//print('Number of Sample Points',collLength);
+
+	var sampleSeq = ee.List.sequence(1, collLength);
+	//print('Sample Sequence',sampleSeq);
+
+	var inputtedFCWithRand = inputtedFeatureCollection.randomColumn('Rand_Num', 42).sort('Rand_Num').toList(collLength);
+	//print('Total FC with Random Column',inputtedFCWithRand);
+
+	// Prep the feature collection with random fold assignment numbers
+	var preppedListOfFeats = sampleSeq.map(function(numberToSet) {
+		return ee.Feature(inputtedFCWithRand.get(ee.Number(numberToSet).subtract(1))).set('Fold_ID', ee.Number(numberToSet));
+	});
+	//print('Prepped FC', preppedListOfFeats);
+
+
+
+
+	// ———————————————————————————————————————————————————————————————
+	// This section divides the feature collection into the k folds
+
+
+	var averageFoldSize = collLength.divide(k).floor();
+	//print('Average Fold Size',averageFoldSize);
+
+	var remainingSampleSize = collLength.mod(k);
+	//print('Remaining Sample Size', remainingSampleSize);
+
+	var foldSequenceWithoutRemainder = ee.List.sequence(0, k - 1).map(function(fold) {
+		var foldStart = ee.Number(fold).multiply(averageFoldSize).add(1);
+		var foldEnd = ee.Number(foldStart).add(averageFoldSize.subtract(1));
+		var foldNumbers = ee.List.sequence(foldStart, foldEnd);
+		return ee.List(foldNumbers);
+	});
+	//print('Fold Sequence Without Remaining Samples',foldSequenceWithoutRemainder);
+
+	var remainingFoldSequence = ee.List.sequence(ee.Number(ee.List(foldSequenceWithoutRemainder.get(foldSequenceWithoutRemainder.length().subtract(1))).get(averageFoldSize.subtract(1))),
+		ee.Number(ee.List(foldSequenceWithoutRemainder.get(foldSequenceWithoutRemainder.length().subtract(1))).get(averageFoldSize.subtract(1))).add(ee.Number(remainingSampleSize).subtract(1)));
+	//print('Remaining Fold Sequence',remainingFoldSequence);
+
+	// This is a list of lists describing which features will go into each fold
+	var listsWithRemaindersAdded = foldSequenceWithoutRemainder.zip(remainingFoldSequence).map(function(list) {
+		return ee.List(list).flatten();
+	});
+	//print('Lists with Remainders Added',listsWithRemaindersAdded);
+
+	var finalFoldLists = listsWithRemaindersAdded.cat(foldSequenceWithoutRemainder.slice(listsWithRemaindersAdded.length()));
+	//print('Final Fold Lists Formatted',finalFoldLists);
+
+	var mainFoldList = ee.List.sequence(0, k - 1);
+	//print('Main Fold List',mainFoldList);
+
+
+	// Compute the collected training data
+	var trainingData = mainFoldList.map(function(foldNumber) {
+		var listWithoutFold = finalFoldLists.get(foldNumber);
+		var foldListOfLists = ee.FeatureCollection(preppedListOfFeats).filter(ee.Filter.inList('Fold_ID', listWithoutFold).not()).toList(collLength);
+		return foldListOfLists;
+	});
+	//print('Training Data Folds', trainingData);
+
+
+	// Compute the validation folds
+	var validationData = mainFoldList.map(function(foldNumber) {
+		var listWithoutFold = finalFoldLists.get(foldNumber);
+		var foldListOfLists = ee.FeatureCollection(preppedListOfFeats).filter(ee.Filter.inList('Fold_ID', listWithoutFold)).toList(collLength);
+		return foldListOfLists;
+	});
+	//print('Validation Data Folds', validationData);
+
+
+
+
+	// ———————————————————————————————————————————————————————————————
+	// Train the data and retrieve the values at the sample points
+
+
+	// Classify the images based on the training folds
+	var classifiedImages = mainFoldList.map(function(foldNumber) {
+		var trainingFold = imageToClassify.sampleRegions({
+	collection:ee.FeatureCollection(ee.List(trainingData.get(foldNumber))),
+  scale: scaleToSample,
+  tileScale:16
+		});
+		var trainedClassifier = classifierOfChoice.train(trainingFold, propertyToPredictAsString);
+		var classifiedImages = imageToClassify.classify(trainedClassifier).rename(ee.String(propertyToPredictAsString).cat('_Classification'));
+		return classifiedImages;
+	});
+   //print('Classified Images', classifiedImages);
+
+  //important
+	var important = mainFoldList.map(function(foldNumber) {
+		var trainingFold = imageToClassify.sampleRegions({
+	collection:ee.FeatureCollection(ee.List(trainingData.get(foldNumber))),
+  scale: scaleToSample,
+  tileScale:16
+		});
+		var trainedClassifier = classifierOfChoice.train(trainingFold, propertyToPredictAsString);
+		var dict= trainedClassifier.explain();
+		var important = ee.Feature(null, ee.Dictionary(dict).get('importance'));
+		return important;
+	});
+  // print('important', important);
+
+	// Retrieve the validation data from the validation folds
+	var validationResults = mainFoldList.map(function(foldNumber) {
+		var imageToSample = ee.Image(classifiedImages.get(foldNumber));
+		var validationFoldSamples = ee.List(validationData.get(foldNumber)).map(function(feat) {
+			return ee.Feature(feat).set('Fold_Number', foldNumber);
+		});
+		var validationResults = imageToSample.sampleRegions({
+			collection: ee.FeatureCollection(validationFoldSamples).select([propertyToPredictAsString, 'Fold_Number', 'Fold_ID', 'Sample_Num']),
+			scale: scaleToSample,
+			tileScale:16
+		}).toList(collLength);
+		return validationResults;
+	});
+	//print('Validation Results',validationResults);
+
+	var validationResultsFlattened = ee.FeatureCollection(validationResults.flatten());
+//print('Validation Results Flattened and Formatted',validationResultsFlattened);
+
+	var imageclassification = ee.ImageCollection.fromImages(classifiedImages);
+
+
+  var importance = important;
+  //print('importance',importance);
+ 
+	return ([validationResultsFlattened,imageclassification,importance]);
+	
+
+};
+
+
+var kFoldCVResults = kFoldCrossValidation(inputtedFeatureCollection, imageToClassify, k, classifierOfChoice, propertyToPredictAsString, scaleToSample);
+//print('k-Fold Cross Validation Results', kFoldCVResults);
+
+
+var confusionMatrix = kFoldCVResults[0].errorMatrix('landcover', 'landcover_Classification');
+print('Confusion Matrix', confusionMatrix);
+
+var accuracy = confusionMatrix.accuracy();
+var userAccuracy = confusionMatrix.consumersAccuracy();
+var producersAccuracy = confusionMatrix.producersAccuracy();
+var kappa = confusionMatrix.kappa();
+
+print('accuracy',accuracy);
+print('userAccuracy',userAccuracy);
+print('producersAccuracy',producersAccuracy);
+print('kappa',kappa);
+
+
+  
+function mode() {
+  //ee.Reducer.mode
+  //list
+  var a = ee.List([2,1,3,3,5]);
+  print("mode", a.reduce(ee.Reducer.mode()));
+}
+ 
+ var imageclassified = kFoldCVResults[1].reduce(ee.Reducer.mode());
+ print("imageclassified", imageclassified); 
+
+
+//随机森林特征重要性  
+var variable_importance = kFoldCVResults[2];
+
+print(variable_importance); 
+///
+ 
+///采用不同窗口平滑图像目的是为了减小分类为很小的土地类型
+//var imageclassified = imageclassified.focal_max(2,'square');  
+//print("imageclassified", imageclassified); 
+
+// 设定一个土地分类调色板
+var PALETTE = [
+    'aec3d4', // Anshu
+    '152106',// Hongshulin
+    '6a2325', // jingjilinheguanmu
+    '111149', // Kuolei
+    'cdb33b', // Shanlei
+    'cc0013', // Songleihezhulei
+    'f7e084', // Weichenglin
+    '6f6f6f', // qitalin
+    'DF923D', 
+    'F1B555', 
+    'FCD163',
+].join(',');
+var vis_params = {min: 0, max: 11, palette: PALETTE};//类别有11类
+
+
+
+//显示分类
+Map.centerObject(classNames, 11);
+Map.addLayer(imageclassified,vis_params,'imageclassified');
+
+
+
+Export.image.toDrive({
+  image: imageclassified,
+  description: "L9__result_2022_3",
+  scale: scale,
+  region:ROI,
+  fileFormat: 'GeoTIFF',
+  maxPixels: 1e13
+}); 
+
+
